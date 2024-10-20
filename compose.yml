@@ -1,0 +1,14 @@
+services:
+  dev:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    tty: true
+    restart: always
+    environment:
+      - CARGO_BUILD_TARGET_DIR=/tmp/target
+    volumes:
+      - type: bind
+        source: .
+        target: /workspaces
+    working_dir: /workspaces
