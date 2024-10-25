@@ -1,13 +1,22 @@
 services:
-  dev:
+  app:
     build: 
       context: .
       dockerfile: Dockerfile
     tty: true
-    restart: always
+    # user: 1000:1000 # set your GID:UID
+    network_mode: "host"
     environment:
-      - CARGO_BUILD_TARGET_DIR=/tmp/target
+      DISPLAY: $DISPLAY
+      CARGO_BUILD_TARGET_DIR: /tmp/target
     volumes:
+      - type: bind
+        source: /tmp/.X11-unix
+        target: /tmp/.X11-unix
+      # - type: bind
+      #   source: ~/.Xauthority
+      #   target: /.Xauthority
+      #   read_only: true
       - type: bind
         source: .
         target: /workspaces
